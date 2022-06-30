@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:partly_windy/screens/home/home_route.dart';
+import 'package:partly_windy/screens/daily_forecast/daily_forecast_route.dart';
 import 'package:partly_windy/theme/theme.dart';
 
 void main() {
@@ -16,7 +16,8 @@ class PartlyWindy extends StatelessWidget {
       theme: buildLightTheme(),
       darkTheme: buildDarkTheme(),
       themeMode: ThemeMode.system,
-      home: const HomeRoute(),
+      debugShowCheckedModeBanner: false,
+      home: const DailyForecastRoute(),
     );
   }
 }
