@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_route.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_view_phone.dart';
+import 'package:partly_windy/screens/daily_forecast/daily_forecast_view_watch.dart';
 
 /// Controller for [DailyForecastRoute].
 class DailyForecastController extends State<DailyForecastRoute> {
@@ -10,7 +11,11 @@ class DailyForecastController extends State<DailyForecastRoute> {
     double screenWidth = MediaQuery.of(context).size.width;
     debugPrint('Host device screen width: $screenWidth');
 
-    // TODO load different views based on screen size
-    return DailyForecastViewPhone(this);
+    // Return the view appropriate for the device screen size
+    if (screenWidth < 300) {
+      return DailyForecastViewWatch(this);
+    } else {
+      return DailyForecastViewPhone(this);
+    }
   }
 }
