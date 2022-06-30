@@ -5,9 +5,9 @@ A weather app powered by the very latest in machine learning technology.
 ## TL;DR
 
 We're gonna make a Flutter app that leverages OpenAI text completion to give us the weather
-forecasts. No more messing with rain gages and those spinning wind speed gadgets, we are going
-to get our weather forecasts right from the burning heart of computer science achievement,
-machine learning. It will go great. Don't worry.
+forecasts. No more messing with rain gages and those spinning wind speed gadgets, we are going to
+get our weather forecasts right from the burning heart of computer science achievement, machine
+learning. It will go great. Don't worry.
 
 ## Forecasting the Weather
 
@@ -29,21 +29,38 @@ Forecasting the weather is a really bonkers endeavor.
 ## Using AI for That (/s)
 
 Here's the thing though, why don't we just use AI for that? Machine learning, or, popularly,
-artificial intelligence is constantly being held up as the culmination of all human achievement,
-or so it sometimes seems. Machine learning is constantly being touted as the solution for all manner
-of different issues. Don't like driving your car? Make the AI do that. Don't like typing things into
+artificial intelligence is constantly being held up as the culmination of all human achievement, or
+so it sometimes seems. Machine learning is constantly being touted as the solution for all manner of
+different issues. Don't like driving your car? Make the AI do that. Don't like typing things into
 your smartphone? Make the AI listen to queries. Don't like shopping? Make the AI tell you what you
-want to buy. Don't like paying call center employees? Make the AI talk to your customers, they
-will love it!
+want to buy. Don't like paying call center employees? Make the AI talk to your customers, they will
+love it!
 
 So, today we are going to unleash machine learning to make a whole new group of employed people
 redundant: weather scientists and TV personalities. Why bother with all that scientific gadgetry,
-data collection, and mathematics when we can just make the AI give us the weather forecast? For
-the low, low cost of some data center CPU cycles we can just get a weather forecast from the latest
-and  greatest in NLP technologies. For the price of your typical weather radar station, we can hit
+data collection, and mathematics when we can just make the AI give us the weather forecast? For the
+low, low cost of some data center CPU cycles we can just get a weather forecast from the latest and
+greatest in NLP technologies. For the price of your typical weather radar station, we can hit
 machine learning API endpoints pretty much forever.
 
 Sure, the accuracy of our weather forecasts might suffer a little; after all, the ability for AI
-systems today to deliver actually accurate and truthful information is, without wanting to
-put too fine a point on it, total shit. But we can stand to give up a little accuracy if it means
-we can put the words "artificial intelligence" in our marketing material.
+systems today to deliver actually accurate and truthful information is, without wanting to put too
+fine a point on it, total shit. But we can stand to give up a little accuracy if it means we can put
+the words "artificial intelligence" in our marketing material.
+
+## Set Up a Wear OS Debugging Session
+
+*[http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession](http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession)*
+
+1. On the handheld, open the Android Wear companion app.
+2. Tap the menu on the top right and select Settings.
+3. Enable Debugging over Bluetooth.
+4. Connect the handheld to your machine over USB and run:
+
+> ```adb forward tcp:4444 localabstract:/adb-hub```
+> ```adb connect localhost:4444```
+
+In the Android Wear companion app, you should see the status change to:
+
+> Host: connected
+> Target: connected
