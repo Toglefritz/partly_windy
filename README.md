@@ -48,6 +48,18 @@ systems today to deliver actually accurate and truthful information is, without 
 fine a point on it, total shit. But we can stand to give up a little accuracy if it means we can put
 the words "artificial intelligence" in our marketing material.
 
+## On All Your Favorite Platforms
+
+The **Partly Windy** app is built using Flutter, the cross-platform app development framework from
+Google. One of the greatest parts about developing with Flutter is that apps can be built for and
+run on many different platforms from a single codebase. Flutter 3.x supports Android, iOS, web,
+Windows, MacOS, and Linux. Partly Windy supports all of these platforms (although it has not been
+built for the Apple ones yet since I don't own a MacOS machine).
+
+However, with this project we will go one step farther still with the effort to run the app on 
+*every* screen by including support for Wear OS devices, still from the same codebase as the 
+other platforms.
+
 ## Set Up a Wear OS Debugging Session
 
 *[http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession](http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession)*
