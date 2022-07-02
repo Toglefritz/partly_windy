@@ -29,10 +29,9 @@ class DailyForecastController extends State<DailyForecastRoute> {
     // TODO check if shared_preferences has a forecast to today already
     return FutureBuilder(
         future: CompletionsApi.getForecast(),
-        builder: (BuildContext context,
-            AsyncSnapshot<CompletionsResponse> forecast) {
+        builder: (BuildContext context, AsyncSnapshot<String?> forecast) {
           if (forecast.hasData) {
-            dailyForecast = forecast.data?.firstCompletion;
+            dailyForecast = forecast.data;
 
             // Return the view appropriate for the device screen size
             // TODO add a view for large screens

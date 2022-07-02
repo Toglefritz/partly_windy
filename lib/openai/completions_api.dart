@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:partly_windy/openai/api_key.dart';
 import 'package:partly_windy/openai/completion%20_prompts.dart';
 import 'package:partly_windy/openai/completions_request.dart';
 import 'package:partly_windy/openai/openai_models.dart';
 import 'dart:math';
 import 'package:partly_windy/openai/completions_response.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:partly_windy/values/strings.dart';
 
 /// Provides methods for interacting with the OpenAI completions endpoints.
 ///
@@ -40,9 +43,35 @@ class CompletionsApi {
     'Authorization': 'Bearer $openAIApiKey',
   };
 
+  // Get the shared_preferences key from the current date under which
+  // today's forecast will be stored
+  static final String key = DateFormat.yMMMd().format(DateTime.now());
+
+  /// Returns a String with the AI-generated forecast either from
+  /// shared_preferences or by getting a new one from the OpenAI API
+  static Future<String?> getForecast() async {
+    //  First check if there is already a forecast saved for today
+    // Obtain a shared_preferences instance.
+    final prefs = await SharedPreferences.getInstance();
+
+    String? storedForecast = prefs.getString(key);
+
+    // We found a stored forecast
+    if (storedForecast != null) {
+      debugPrint('Retrieved a weather forecast from storage');
+
+      return storedForecast;
+    }
+    // We need a new forecast
+    else {
+      CompletionsResponse newForecast = await getNewForecast();
+      return newForecast.firstCompletion;
+    }
+  }
+
   /// Gets a "weather forecast" from the OpenAI completions endpoint
-  static Future<CompletionsResponse> getForecast() async {
-    debugPrint('Getting a weather forecast');
+  static Future<CompletionsResponse> getNewForecast() async {
+    debugPrint('Getting a new weather forecast');
 
     // Generate a random number for picking a random prompt
     Random rng = Random();
@@ -73,11 +102,29 @@ class CompletionsApi {
           'Failed to get a forecast with status code, ${response.statusCode}');
     }
 
-    return CompletionsResponse.fromResponse(response);
+    CompletionsResponse completionsResponse =
+        CompletionsResponse.fromResponse(response);
+
+    // Save the forecast
+    saveForecast(completionsResponse);
+
+    return completionsResponse;
   }
 
-  /// Saves the "forecast" for the current day using shared_preferences
-  static Future<void> saveForecast() async {
-    // TODO implement this
+  /// Saves the "forecast" for the current day using shared_preferences.
+  ///
+  /// In order to enable a historical view of the forecasts and reduce the cost
+  /// of making repeated calls to the OpenAI completions API, the forecast for
+  /// each day will be saved using shared_preferences. The key under which each
+  /// forecast is saved is the the current date, in a format like "Jul 2, 2022"
+  /// as a String. The app will look up the forecast by this key and only call
+  /// the OpenAI API if there is no forecast saved for the current day.
+  static Future<void> saveForecast(CompletionsResponse response) async {
+    // Obtain a shared_preferences instance.
+    final prefs = await SharedPreferences.getInstance();
+
+    debugPrint('Saving today\'s forecast under key, $key');
+
+    await prefs.setString(key, response.firstCompletion ?? Strings.noWeather);
   }
 }
