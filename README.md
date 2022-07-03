@@ -60,6 +60,31 @@ However, with this project we will go one step farther still with the effort to 
 *every* screen by including support for Wear OS devices, still from the same codebase as the 
 other platforms.
 
+## Set up OpenAI Authentication
+
+The "latest in machine learning technology" referenced up at the very top of this README is 
+OpenAI's set of NLP tools and APIs: [https://beta.openai.com/overview](https://beta.openai.com/overview). 
+This app uses the text completion capabilities of the OpenAI ML models to generate
+"weather forecasts" that doubtless have infallible accuracy (again /s).
+
+Before you can use OpenAI's APIs in your own build of this codebase, you will need to obtain an 
+API key. Needless to say, for security reasons, my API key is not included in this repository.
+The process for obtaining an API key is basically to just start a free trial on the OpenAI 
+website or plug in your payment information if your usage exceeds the trial terms. You can head
+over to the [OpenAI website](https://openai.com/api/) to get an API key.
+
+With your shiny new API key in hand, you will need to add it to a file so the rest of the app can
+get it when needed. Create a file called ```api_key.dart``` under ```/lib/openai/```. If you 
+tried to build the app before creating this file, you might have received an error message talking
+about the fact that it was missing.
+
+The contents of this file will be a simple String value like this:
+
+> ```String openAIApiKey = 'your-key-here';```
+
+With the file created and your API key added to the openAIApiKey variable, you will be all set to
+authenticate calls to the OpenAI completions endpoint.
+
 ## Set Up a Wear OS Debugging Session
 
 *[http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession](http://android.cn-mirrors.com/training/wearables/apps/bt-debugging.html#SetupSession)*
