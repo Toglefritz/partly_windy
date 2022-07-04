@@ -60,12 +60,12 @@ class CompletionsApi {
     if (storedForecast != null) {
       debugPrint('Retrieved a weather forecast from storage');
 
-      return storedForecast;
+      return storedForecast.trim();
     }
     // We need a new forecast
     else {
       CompletionsResponse newForecast = await getNewForecast();
-      return newForecast.firstCompletion;
+      return newForecast.firstCompletion?.trim();
     }
   }
 
