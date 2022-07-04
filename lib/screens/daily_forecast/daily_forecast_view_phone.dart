@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_controller.dart';
-import 'package:partly_windy/values/strings.dart';
 import 'package:partly_windy/theme/gradients/time_gradient.dart';
+import 'package:partly_windy/screens/daily_forecast/components/weather_forecast.dart';
 
 /// View for [DailyForecastRoute] for phone-sized devices.
 class DailyForecastViewPhone extends StatelessWidget {
@@ -15,11 +16,19 @@ class DailyForecastViewPhone extends StatelessWidget {
       backgroundColor: Colors.black54,
       body: TimeGradient(
         child: Center(
-          child: Text(
-            state.dailyForecast ?? Strings.noWeather,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: WeatherForecast(state: state),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 24),
+                child: Text(
+                  DateFormat.yMMMd().format(DateTime.now()),
+                ),
+              ),
+            ],
           ),
         ),
       ),
