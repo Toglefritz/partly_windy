@@ -4,7 +4,6 @@ import 'package:partly_windy/screens/daily_forecast/daily_forecast_route.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_view_phone.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_view_watch.dart';
 import 'package:partly_windy/screens/daily_forecast/daily_forecast_view_loading.dart';
-import 'package:partly_windy/openai/completions_response.dart';
 
 /// Controller for [DailyForecastRoute].
 ///
@@ -28,7 +27,7 @@ class DailyForecastController extends State<DailyForecastRoute> {
 
     // TODO check if shared_preferences has a forecast to today already
     return FutureBuilder(
-        future: CompletionsApi.getForecast(),
+        future: CompletionsApi.getForecast(screenWidth < 300 ? 6 : 9),
         builder: (BuildContext context, AsyncSnapshot<String?> forecast) {
           if (forecast.hasData) {
             dailyForecast = forecast.data;

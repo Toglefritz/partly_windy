@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:partly_windy/screens/daily_forecast/daily_forecast_controller.dart';
 
 /// View for [DailyForecastRoute] while the forecast is loading.
 ///

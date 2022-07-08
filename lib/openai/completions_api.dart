@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:partly_windy/openai/api_key.dart';
-import 'package:partly_windy/openai/completion%20_prompts.dart';
 import 'package:partly_windy/openai/completions_request.dart';
 import 'package:partly_windy/openai/openai_models.dart';
 import 'dart:math';
 import 'package:partly_windy/openai/completions_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:partly_windy/values/strings.dart';
+import 'package:partly_windy/openai/completion_prompts.dart';
 
 /// Provides methods for interacting with the OpenAI completions endpoints.
 ///
@@ -49,7 +49,7 @@ class CompletionsApi {
 
   /// Returns a String with the AI-generated forecast either from
   /// shared_preferences or by getting a new one from the OpenAI API
-  static Future<String?> getForecast() async {
+  static Future<String?> getForecast(int maxTokens) async {
     //  First check if there is already a forecast saved for today
     // Obtain a shared_preferences instance.
     final prefs = await SharedPreferences.getInstance();
@@ -64,13 +64,13 @@ class CompletionsApi {
     }
     // We need a new forecast
     else {
-      CompletionsResponse newForecast = await getNewForecast();
+      CompletionsResponse newForecast = await getNewForecast(maxTokens);
       return newForecast.firstCompletion?.trim();
     }
   }
 
   /// Gets a "weather forecast" from the OpenAI completions endpoint
-  static Future<CompletionsResponse> getNewForecast() async {
+  static Future<CompletionsResponse> getNewForecast(int maxTokens) async {
     debugPrint('Getting a new weather forecast');
 
     // Generate a random number for picking a random prompt
@@ -83,7 +83,7 @@ class CompletionsApi {
     CompletionsRequest request = CompletionsRequest(
       model: OpenAIModel.model(OpenAIModels.textCurie001).identifier,
       prompt: completionsPrompts[promptIndex],
-      maxTokens: 6,
+      maxTokens: maxTokens,
       temperature: temp,
     );
 
