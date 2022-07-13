@@ -25,7 +25,6 @@ class DailyForecastController extends State<DailyForecastRoute> {
     double screenWidth = MediaQuery.of(context).size.width;
     debugPrint('Host device screen width: $screenWidth');
 
-    // TODO check if shared_preferences has a forecast to today already
     return FutureBuilder(
         future: CompletionsApi.getForecast(screenWidth < 300 ? 6 : 9),
         builder: (BuildContext context, AsyncSnapshot<String?> forecast) {
