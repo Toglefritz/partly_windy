@@ -21,27 +21,33 @@ class DailyForecastController extends State<DailyForecastRoute> {
 
   @override
   Widget build(BuildContext context) {
-    // The screen width of the host device
-    double screenWidth = MediaQuery.of(context).size.width;
-    debugPrint('Host device screen width: $screenWidth');
+    // Return the view appropriate for the device screen size
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        debugPrint('Host device screen width: ${constraints.maxWidth}');
 
-    return FutureBuilder(
-        future: CompletionsApi.getForecast(screenWidth < 300 ? 6 : 9),
-        builder: (BuildContext context, AsyncSnapshot<String?> forecast) {
-          if (forecast.hasData) {
-            dailyForecast = forecast.data;
+        return FutureBuilder(
+          future:
+              CompletionsApi.getForecast(constraints.maxWidth < 300 ? 6 : 9),
+          builder: (BuildContext context, AsyncSnapshot<String?> forecast) {
+            if (forecast.hasData) {
+              dailyForecast = forecast.data;
 
-            // Return the view appropriate for the device screen size
-            // TODO add a view for large screens
-            if (screenWidth < 300) {
-              return DailyForecastViewWatch(this);
+              // Watch-sized device
+              if (constraints.maxWidth < 300) {
+                return DailyForecastViewWatch(this);
+              }
+              // Phone-sized device
+              else {
+                return DailyForecastViewPhone(this);
+              }
             } else {
-              return DailyForecastViewPhone(this);
+              // Display a loading indicator while waiting for the forecast
+              return const DailyForecastViewLoading();
             }
-          } else {
-            // Display a loading indicator while waiting for the forecast
-            return const DailyForecastViewLoading();
-          }
-        });
+          },
+        );
+      },
+    );
   }
 }
